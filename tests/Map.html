@@ -1690,7 +1690,7 @@
     }
     
     function test_pan(t) {
-        t.plan(4);
+        t.plan(8);
         
         var map = new OpenLayers.Map("map");
         map.addLayer(
@@ -1713,6 +1713,12 @@
         t.eq(log[log.length-2], "move", "move again before we stop panning,");
         t.eq(log[log.length-1], "moveend", "and moveend when we're done.");
         
+        log = []
+        map.pan(5,5, {animate: false});
+        t.eq(log[0], "movestart", "pan sequence starts with movestart");
+        t.eq(log[1], "move", "followed by move,");
+        t.eq(log[2], "moveend", "and moveend when we're done.");
+        t.eq(log.length, 3, "no more than 3 events happen.");
     }
 
     // test if we can call updateSize before document.body is ready. updateOk
